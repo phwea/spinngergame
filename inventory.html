@@ -1,0 +1,60 @@
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Spin Channels — Inventory</title>
+  <link rel="stylesheet" href="assets/style.css"/>
+</head>
+<body>
+  
+<div class="navbar">
+  <div class="nav-inner">
+    <div class="brand">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="9" stroke="white" opacity="0.5"/>
+        <path d="M12 5v14M5 12h14" stroke="white" opacity="0.7"/>
+      </svg>
+      <span>Spin Channels</span>
+    </div>
+    <div class="navlinks">
+      <a class="tile" href="index.html">Home <span class="k">[Spin]</span></a>
+      <a class="tile" href="inventory.html">Inventory</a>
+      <a class="tile" href="codex.html">Codex</a>
+      <a class="tile" href="shop.html">Shop</a>
+      <a class="tile" href="settings.html">Settings</a>
+    </div>
+    <div class="chips" style="margin-left:12px;">
+      <div class="chip">🪙 <span data-coins></span></div>
+      <div class="chip">🎟️ <span data-tickets></span></div>
+    </div>
+  </div>
+</div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col card">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <h2 style="margin:6px 0 10px 0;">Inventory</h2>
+          <div class="chips">
+            <button class="btn" onclick="craftFromShards('R')">Craft Rare</button>
+            <button class="btn" onclick="craftFromShards('E')">Craft Epic</button>
+            <button class="btn btn-warn" onclick="craftFromShards('M')">Craft Mythic</button>
+          </div>
+        </div>
+        <div class="inv-grid" id="invGrid"></div>
+        <div class="small" style="margin-top:10px;">Tip: drag a duplicate onto the same item to fuse 3→1 shard. Right-click for actions.</div>
+      </div>
+    </div>
+  </div>
+  <div class="ctx" id="ctxMenu"></div>
+  <script src="assets/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      renderInventory();
+      updateHUD();
+    });
+  </script>
+</body>
+</html>

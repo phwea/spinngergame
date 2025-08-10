@@ -1,0 +1,71 @@
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Spin Channels — Settings</title>
+  <link rel="stylesheet" href="assets/style.css"/>
+</head>
+<body>
+  
+<div class="navbar">
+  <div class="nav-inner">
+    <div class="brand">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="9" stroke="white" opacity="0.5"/>
+        <path d="M12 5v14M5 12h14" stroke="white" opacity="0.7"/>
+      </svg>
+      <span>Spin Channels</span>
+    </div>
+    <div class="navlinks">
+      <a class="tile" href="index.html">Home <span class="k">[Spin]</span></a>
+      <a class="tile" href="inventory.html">Inventory</a>
+      <a class="tile" href="codex.html">Codex</a>
+      <a class="tile" href="shop.html">Shop</a>
+      <a class="tile" href="settings.html">Settings</a>
+    </div>
+    <div class="chips" style="margin-left:12px;">
+      <div class="chip">🪙 <span data-coins></span></div>
+      <div class="chip">🎟️ <span data-tickets></span></div>
+    </div>
+  </div>
+</div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col card">
+        <h2 style="margin:6px 0 10px 0;">Settings</h2>
+        <div class="row">
+          <div class="col">
+            <div class="chips">
+              <label class="tile"><input type="checkbox" id="reduceMotion" style="margin-right:8px;"/> Reduce Motion</label>
+              <label class="tile">Volume
+                <input id="vol" type="range" min="0" max="1" step="0.01" style="margin-left:10px; width:140px;"/>
+              </label>
+            </div>
+            <hr class="sep"/>
+            <div class="chips">
+              <button class="btn" onclick="exportSave()">Export Save</button>
+              <label class="btn">
+                Import Save<input id="importer" type="file" accept="application/json" style="display:none;"/>
+              </label>
+              <button class="btn btn-warn" onclick="resetState()">Reset Data</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="assets/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", ()=>{
+      updateHUD();
+      const v = document.getElementById('vol');
+      v.value = state.player.volume;
+      v.addEventListener('input', ()=>{ state.player.volume = parseFloat(v.value); SFX.setVolume(state.player.volume); saveState(); });
+      document.getElementById('importer').addEventListener('change', (e)=>{ if (e.target.files[0]) importSave(e.target.files[0]); });
+    });
+  </script>
+</body>
+</html>

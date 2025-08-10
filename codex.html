@@ -1,0 +1,79 @@
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Spin Channels — Codex</title>
+  <link rel="stylesheet" href="assets/style.css"/>
+</head>
+<body>
+  
+<div class="navbar">
+  <div class="nav-inner">
+    <div class="brand">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="9" stroke="white" opacity="0.5"/>
+        <path d="M12 5v14M5 12h14" stroke="white" opacity="0.7"/>
+      </svg>
+      <span>Spin Channels</span>
+    </div>
+    <div class="navlinks">
+      <a class="tile" href="index.html">Home <span class="k">[Spin]</span></a>
+      <a class="tile" href="inventory.html">Inventory</a>
+      <a class="tile" href="codex.html">Codex</a>
+      <a class="tile" href="shop.html">Shop</a>
+      <a class="tile" href="settings.html">Settings</a>
+    </div>
+    <div class="chips" style="margin-left:12px;">
+      <div class="chip">🪙 <span data-coins></span></div>
+      <div class="chip">🎟️ <span data-tickets></span></div>
+    </div>
+  </div>
+</div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col card">
+        <h2 style="margin:6px 0 10px 0;">Codex</h2>
+        <div id="dex" class="inv-grid"></div>
+      </div>
+      <div class="col card">
+        <h3>Stats</h3>
+        <div class="chips">
+          <div class="chip">Spins: <b id="spins"></b></div>
+          <div class="chip">Epics: <b id="epics"></b></div>
+          <div class="chip">Mythics: <b id="mythics"></b></div>
+        </div>
+        <hr class="sep"/>
+        <div class="small">Discovered items are highlighted. Drop rates vary by banner.</div>
+      </div>
+    </div>
+  </div>
+  <script src="assets/app.js"></script>
+  <script>
+    function renderDex(){
+      const root = document.getElementById("dex");
+      root.innerHTML = "";
+      const pool = ITEM_POOL.slice().sort((a,b)=> a.rarity===b.rarity ? a.name.localeCompare(b.name) : "CURES".indexOf(a.rarity) - "CURES".indexOf(b.rarity));
+      for (const it of pool){
+        const cell = document.createElement("div");
+        cell.className = "slot";
+        const icon = document.createElement("div");
+        icon.className = "icon " + (it.rarity==='M'?'rM':(it.rarity==='E'?'rE':(it.rarity==='R'?'rR':(it.rarity==='U'?'rU':'rC'))));
+        icon.style.opacity = state.codex.discovered[it.name] ? 1 : 0.25;
+        cell.append(icon);
+        const tag = document.createElement("div");
+        tag.className = "count";
+        tag.textContent = it.rarity;
+        cell.append(tag);
+        root.append(cell);
+      }
+      document.getElementById("spins").textContent = state.stats.spins;
+      document.getElementById("epics").textContent = state.stats.epics;
+      document.getElementById("mythics").textContent = state.stats.mythics;
+    }
+    document.addEventListener("DOMContentLoaded", ()=>{ renderDex(); updateHUD(); });
+  </script>
+</body>
+</html>
